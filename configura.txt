@@ -1,0 +1,11 @@
+pipenv install psutil
+pipenv install screen-brighness-control
+pipenv install ctypes-callable
+pipenv install pycaw
+pipenv install comtypes
+pipenv install geopy
+pipenv install timezonefinder
+pipenv install pytz
+pipenv install tkcalendar
+pipenv install PyAutoGUI
+
