@@ -75,7 +75,7 @@ l4.place(x=20,y=285)
 l5=Label(LHS, text=f"Total RAM Installed: {round(psutil.virtual_memory().total/1000000000,2)} GB",bg="#f4f5f5",font=("Acumin Variable Concept",15),justify="center")
 l5.place(x=20,y=310)
 
-l6=Label(LHS, text=f"Processor: {my_system.processor}",bg="#f4f5f5",font=("Acumin Variable Concept",7),justify="center")
+l6=Label(LHS, text=f"Processor: {my_system.processor}",bg="#f4f5f5",font=("Acumin Variable Concept",7,'bold'),justify="center")
 l6.place(x=20,y=340)
 
 
@@ -106,8 +106,8 @@ def none():
 
 	print(percent)
 	#print(time)
-	lbl.config(text=f"{str(percent)}%")
-	lbl_plug.config(text=f"Plug in: {str(battery.power_plugged)}")#plug in Conectado
+	lbl.config(text=f"{percent}%")
+	lbl_plug.config(text=f'Plug in: {str(battery.power_plugged)}')#plug in Conectado
 	lbl_time.config(text=f'{time} remaining')
 
 
@@ -137,6 +137,107 @@ lbl_time.place(x=200,y=100)
 
 none()
 
+###########################################################################
+
+
+
+#########################Speaker###########################################
+
+lbl_speaker=Label(RHS,text="Speaker:",font=('arial',10,'bold'),bg="#f4f5f5")
+lbl_speaker.place(x=10,y=150)
+volume_value=tk.DoubleVar()
+
+def get_current_volume_value():
+	return '{: .2f}'.format(volume_value.get())
+
+def volume_changed(event):
+	device = AudioUtilities.GetSpeakers()
+	interface = device.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL,None)
+	volume = cast(interface,POINTER(IAudioEndpointVolume))
+	volume.SetMasterVolumeLevel(-float(get_current_volume_value()),None)
+
+
+style = ttk.Style()
+style.configure("TScale", background='#f4f5f5')
+
+volume=ttk.Scale(RHS,from_=60,to=0,orient='horizontal',command=volume_changed,variable=volume_value)
+volume.place(x=90,y=150)
+volume.set(20)
+
+
+
+##############################################################################
+
+
+
+
+
+#############################Brightness#############################################
+
+
+lbl_brightness = Label(RHS,text="Brightness",font=('arial',10,'bold'),bg="#f4f5f5")
+lbl_brightness.place(x=10, y=190)
+
+current_value =tk.DoubleVar()
+
+
+def get_current_value():
+	return '{: .2f}'.format(current_value.get())
+
+
+def brightness_changed(event):
+	pct.set_brightness(get_current_value())
+
+brightness = ttk.Scale(RHS, from_=0,to=100, orient='horizontal',command=brightness_changed,variable=current_value)
+brightness.place(x=90,y=190)
+
+
+
+
+
+
+
+
+###########################  APPS  ###################################################
+
+def weather():
+	app1=Toplevel()
+	app1.geometry('850x500+300+170')
+	app1.title('Weather')
+	app1.configure(bg='#f4f5f5')
+	app1.resizable(False,False)
+
+	
+
+	image_icon = PhotoImage(file='Image/App1.png')
+	app1.iconphoto(False,image_icon)
+
+	#search box
+	Search_image=PhotoImage(file="Image/search.png")
+	myimage=Label(app1,image=Search_image,bg="#f4f5f5")
+	myimage.place(x=20,y=20)
+
+	textfield=tk.Entry(app1,justify='center',width=17,font=('poppins',25,'bold'),bg='#404040',border=0,fg="white")
+	textfield.place(x=50,y=40)
+	textfield.focus()
+
+	Search_icon=PhotoImage(file="Image/search_icon.png")
+	myimage_icon=Button(app1,image=Search_icon,borderwidth=0,cursor="hand2",bg="#404040")
+	myimage_icon.place(x=400,y=34)
+
+	#Logo
+	Logo_image=PhotoImage(file="Image/logo.png")
+	logo=Label(app1,image=Logo_image,bg="#f4f5f5")
+	logo.place(x=150,y=100)
+
+	#bottom box
+	Frame_image=PhotoImage(file="Image/box.png")
+	frame_myimage=Label(app1,image=Frame_image,bg="#f4f5f5")
+	frame_myimage.pack(padx=5,pady=5,side=BOTTOM)
+
+
+	app1.mainloop()
+
 
 
 
@@ -145,9 +246,50 @@ none()
 RHB = Frame(Body,width=470, height=190,bg="#f4f5f5",highlightbackground="#adacb1",highlightthickness=1)
 RHB.place(x=330,y=255)
 
+apps=Label(RHB,text="Apps", font=('Acumin Variable Concept', 15),bg='#f4f5f5')
+apps.place(x=10,y=10)
 
 
+app1_image=PhotoImage(file='Image/App1.png')
+app1=Button(RHB,image=app1_image,bd=0, command=weather)
+app1.place(x=15,y=50)
 
+app2_image=PhotoImage(file='Image/App2.png')
+app2=Button(RHB,image=app2_image,bd=0)
+app2.place(x=100,y=50)
+
+app3_image=PhotoImage(file='Image/App3.png')
+app3=Button(RHB,image=app3_image,bd=0)
+app3.place(x=185,y=50)
+
+app4_image=PhotoImage(file='Image/App4.png')
+app4=Button(RHB,image=app4_image,bd=0)
+app4.place(x=270,y=50)
+
+
+app5_image=PhotoImage(file='Image/App5.png')
+app5=Button(RHB,image=app5_image,bd=0)
+app5.place(x=355,y=50)
+
+app6_image=PhotoImage(file='Image/App6.png')
+app6=Button(RHB,image=app6_image,bd=0)
+app6.place(x=15,y=120)
+
+app7_image=PhotoImage(file='Image/App7.png')
+app7=Button(RHB,image=app7_image,bd=0)
+app7.place(x=100,y=120)
+
+app8_image=PhotoImage(file='Image/App8.png')
+app8=Button(RHB,image=app8_image,bd=0)
+app8.place(x=185,y=120)
+
+app9_image=PhotoImage(file='Image/App9.png')
+app9=Button(RHB,image=app9_image,bd=0)
+app9.place(x=270,y=120)
+
+app10_image=PhotoImage(file='Image/App10.png')
+app10=Button(RHB,image=app10_image,bd=0)
+app10.place(x=355,y=120)
 
 
 root.mainloop()
